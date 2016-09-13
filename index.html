@@ -4,53 +4,40 @@
     <meta charset="UTF-8">
     <title>IA1</title>
     <link type="text/css" rel="stylesheet" href="http://pubnub.github.io/eon/v/eon/0.0.10/eon.css" />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet' />
+
+    <style type="text/css">
+        html, body { margin: 0; }
+        #map {
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+        }
+
+    </style>
     <script src="js/jquery-3.1.0.min.js"></script>
 
 </head>
 <body>
-<div id="chart"></div>
+<div id="map"></div>
 <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
 <script type="text/javascript" src="http://pubnub.github.io/eon/v/eon/0.0.10/eon.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
 <script>
-    // using the example stream from
-    // http://www.pubnub.com/developers/data-streams/sensor-network
-    var pubnub = PUBNUB.init({
-        subscribe_key: 'sub-c-5f1b7c8e-fbee-11e3-aa40-02ee2ddab7fe',
-        ssl: true
-    });
-    eon.chart({
+    mapboxgl.accessToken = 'pk.eyJ1IjoidXRzYXYwOTA5IiwiYSI6ImNpdDFtZHRudjBxc2syemtoZjI0bjE4NzkifQ.RV1HiRx3rIgAixEC8gNEIw';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/utsav0909/cit1n2s5v00282xn7kajvhjhs'
+        channel : "iss-pubnub",
         pubnub: pubnub,
-        channel: 'pubnub-sensor-network',
-        limit: 100,
-        rate: 10,
-        ssl: true,
-        debug: true,
-        generate: {
-            transition: {
-                duration: 3
-            },
-            bindto: '#chart',
-            data: {
-                x: 'x'
-            },
-            axis: {
-                x: {
-                    type: 'timeseries',
-                    tick: {
-                        format: '%H:%m:%S'
-                    }
-                }
-            }
-        },
-        transform: function(m) {
-            return {
-                eon: {
-                    'Humidity': m.humidity,
-                    'Temperature': m.ambient_temperature,
-                    'Light': m.photosensor
-                }
-            }
-        }
+    });
+</script>
+<script>
+    var pubnub = PUBNUB.init({
+        ssl           : true,  // <- enable TLS Tunneling over TCP
+        subscribe_key : 'sub-c-cc7e207a-d418-11e5-bcee-0619f8945a4f',
     });
 </script>
 </body>
