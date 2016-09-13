@@ -21,13 +21,13 @@
     eon.chart({
         pubnub: pubnub,
         channel: 'pubnub-sensor-network',
-        limit: 100,
-        rate: 10,
+        limit: 50,
+        rate: 7,
         ssl: true,
         debug: true,
         generate: {
             transition: {
-                duration: 3
+                duration: 7
             },
             bindto: '#chart',
             data: {
@@ -47,7 +47,8 @@
                 eon: {
                     'Humidity': m.humidity,
                     'Temperature': m.ambient_temperature,
-                    'Light': m.photosensor
+                    'Light': m.photosensor,
+                    'Radiation Level':m.radiation_level
                 }
             }
         }
